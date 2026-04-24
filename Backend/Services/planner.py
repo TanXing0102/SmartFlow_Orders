@@ -7,13 +7,27 @@ def generate_plan(user_input):
         {
             "role": "system",
             "content": """
-You are a strict shopping intent extraction engine.
+You are a STRICT shopping intent parser.
 
-Return ONLY JSON:
+Rules:
+- Return ONLY valid JSON
+- No explanation
+- No markdown
+
+Format:
 {
   "categories": ["camera"],
   "budget": 500
 }
+
+Allowed categories:
+camera, mic, tripod, lighting, laptop
+
+If not relevant:
+- categories = []
+
+If no budget:
+- budget = null
 """
         },
         {
@@ -24,11 +38,6 @@ Return ONLY JSON:
 
     response = call_zai(messages)
 
-    print("RAW AI RESPONSE:", response)
-
-    # -------------------------
-    # Fallback if AI fails
-    # -------------------------
     if not isinstance(response, dict) or "error" in response:
         return fallback_plan(user_input)
 
@@ -43,16 +52,13 @@ Return ONLY JSON:
     if not content:
         return fallback_plan(user_input)
 
-    # -------------------------
-    # Parse AI JSON safely
-    # -------------------------
     try:
         parsed = json.loads(content)
 
-        if not parsed.get("categories"):
+        if "categories" not in parsed:
             parsed["categories"] = infer_categories(user_input)
 
-        if not parsed.get("budget"):
+        if "budget" not in parsed:
             parsed["budget"] = infer_budget(user_input)
 
         return parsed
@@ -62,7 +68,7 @@ Return ONLY JSON:
 
 
 # -------------------------
-# FALLBACK SYSTEM (IMPORTANT)
+# FALLBACK
 # -------------------------
 def fallback_plan(user_input):
     return {
@@ -75,18 +81,18 @@ def infer_categories(text):
     text = text.lower()
     categories = []
 
-    if "camera" in text:
+    if any(w in text for w in ["camera", "dslr"]):
         categories.append("camera")
-    if "mic" in text:
+    if any(w in text for w in ["mic", "microphone"]):
         categories.append("mic")
     if "tripod" in text:
         categories.append("tripod")
-    if "light" in text:
+    if any(w in text for w in ["light", "lighting"]):
         categories.append("lighting")
-    if "laptop" in text:
+    if any(w in text for w in ["laptop", "notebook"]):
         categories.append("laptop")
 
-    return categories if categories else ["camera"]
+    return categories  # 🚨 NO DEFAULT
 
 
 def infer_budget(text):
@@ -101,4 +107,4 @@ def infer_budget(text):
     if "pro" in text:
         return 1500
 
-    return 500
+    return None

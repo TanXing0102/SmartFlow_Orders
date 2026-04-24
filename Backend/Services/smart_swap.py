@@ -1,5 +1,6 @@
 from Utils.helpers import calculate_total, load_products
 
+
 def optimize_cart(cart, budget):
     if not budget:
         return cart, "No budget"
@@ -16,7 +17,7 @@ def optimize_cart(cart, budget):
             p for p in products
             if p["category"] == item["category"]
             and p["price"] < item["price"]
-            and p["stock"]
+            and p.get("stock", 0) > 0
         ]
 
         if cheaper:

@@ -26,24 +26,55 @@ def build_cart():
     user_input = data["prompt"]
 
     try:
-        # PLAN
+        # -------------------------
+        # 1. PLAN
+        # -------------------------
         plan = generate_plan(user_input)
-        categories = plan.get("categories", ["camera"])
+        categories = plan.get("categories", [])
         budget = plan.get("budget", 500)
 
-        # BUILD CART
+        # 🚨 CATEGORY NOT SUPPORTED
+        if not categories:
+            return jsonify({
+                "plan": plan,
+                "cart": [],
+                "total": 0,
+                "status": "not_found",
+                "ai_explanation": "We do not support this product category."
+            })
+
+        # -------------------------
+        # 2. BUILD CART
+        # -------------------------
         cart = build_bundle(categories)
 
-        # OPTIMIZE
-        cart, status = optimize_cart(cart, budget)
+        # 🚨 EMPTY CART
+        if not cart:
+            return jsonify({
+                "plan": plan,
+                "cart": [],
+                "total": 0,
+                "status": "not_found",
+                "ai_explanation": "Sorry, this product is not available in our system."
+            })
 
+        # -------------------------
+        # 3. OPTIMIZE
+        # -------------------------
+        cart, status = optimize_cart(cart, budget)
         total = calculate_total(cart)
 
-        # AI EXPLANATION
+        # -------------------------
+        # 4. AI EXPLANATION (STRICT)
+        # -------------------------
         ai_response = call_zai([
             {
                 "role": "system",
-                "content": "Explain the shopping decision briefly."
+                "content": (
+                    "You are a shopping assistant. "
+                    "ONLY explain items in the cart. "
+                    "DO NOT suggest new products."
+                )
             },
             {
                 "role": "user",
@@ -51,16 +82,13 @@ def build_cart():
             }
         ])
 
-        # -------------------------
-        # SAFE AI HANDLING
-        # -------------------------
+        explanation = "AI unavailable"
+
         if isinstance(ai_response, dict) and ai_response.get("choices"):
             try:
                 explanation = ai_response["choices"][0]["message"]["content"]
             except:
-                explanation = "AI response error"
-        else:
-            explanation = ai_response.get("error", "AI temporarily unavailable")
+                explanation = "AI parsing error"
 
         return jsonify({
             "plan": plan,
