@@ -397,8 +397,8 @@ body {
 }
 
 .avatar {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: var(--radius-xs);
   display: flex;
   align-items: center;
@@ -590,19 +590,6 @@ body {
   border-radius: var(--radius-sm);
 }
 
-.welcome-mark {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-mid));
-  font-family: var(--mono);
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: var(--radius);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.04em;
-}
 
 /* ─── SCROLLBARS ─────────────────────────────────────── */
 .summary::-webkit-scrollbar { width: 3px; }

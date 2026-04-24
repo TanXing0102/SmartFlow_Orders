@@ -182,9 +182,7 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
           <div className="chat-box" ref={chatBoxRef}>
             {messages.length === 0 && (
               <div className="chat-welcome">
-                <div className="welcome-mark">
-                  <img src="logo192.png" alt="SmartFlow Orders" />
-                </div>
+                  <img src="logo192.png" alt="SmartFlow Orders" />                
                 <h2>SmartFlow Orders AI Agent</h2>
                 <p>Tell me what you need — I'll find the best bundle for your budget.</p>
               </div>
@@ -193,7 +191,11 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
             {messages.map((msg, i) => (
               <div key={i} className={`message-wrap ${msg.role}`}>
                 {msg.role === "agent" && (
-                  <div className="avatar agent-avatar">SF</div>
+                  <div className="avatar agent-avatar">
+                    <div className="logo-mark">
+                      <img src="logo192.png" alt="SmartFlow Orders" />
+                    </div>
+                  </div>
                 )}
                 <div className="message-column">
                   <div className={`message ${msg.role}`}>
