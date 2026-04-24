@@ -1,0 +1,39 @@
+[
+  {
+    "id": "cam_001",
+    "name": "Basic Camera",
+    "category": "camera",
+    "price": 300,
+    "stock": true,
+    "specs": {"resolution": "1080p"}
+  },
+  {
+    "id": "cam_002",
+    "name": "4K Camera",
+    "category": "camera",
+    "price": 600,
+    "stock": true,
+    "specs": {"resolution": "4k"}
+  },
+  {
+    "id": "mic_001",
+    "name": "Basic Microphone",
+    "category": "mic",
+    "price": 100,
+    "stock": true
+  },
+  {
+    "id": "tripod_001",
+    "name": "Standard Tripod",
+    "category": "tripod",
+    "price": 80,
+    "stock": true
+  },
+  {
+    "id": "tripod_002",
+    "name": "Premium Tripod",
+    "category": "tripod",
+    "price": 200,
+    "stock": true
+  }
+]

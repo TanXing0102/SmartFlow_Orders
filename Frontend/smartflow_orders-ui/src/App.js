@@ -6,6 +6,7 @@ function App() {
   const [input, setInput] = useState("");
   const [bundle, setBundle] = useState(null);
   const [isThinking, setIsThinking] = useState(false);
+
   const chatBoxRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -19,67 +20,56 @@ function App() {
     if (!input.trim() || isThinking) return;
 
     const userText = input.trim();
-    const userMsg = { role: "user", text: userText };
-    setMessages((prev) => [...prev, userMsg]);
+
+    setMessages((prev) => [
+      ...prev,
+      { role: "user", text: userText }
+    ]);
+
     setInput("");
     setIsThinking(true);
 
     try {
-      const systemPrompt = `You are SmartFlow's AI procurement agent. When a user describes their equipment or setup needs, you:
-1. Acknowledge and reason through their request briefly (2-3 sentences, show your thinking process)
-2. Return a JSON bundle at the END of your response in this exact format:
-<bundle>
-{
-  "bundle": [{"name": "Item Name", "price": 0000}],
-  "total": 0000,
-  "status": "Optimized",
-  "reason": "Brief explanation of choices"
-}
-</bundle>
-
-Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking steps like checking compatibility, budget optimization, stock availability.`;
-
-      const conversationHistory = messages
-        .concat(userMsg)
-        .map((m) => ({
-          role: m.role === "user" ? "user" : "assistant",
-          content: m.text,
-        }));
-
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("http://localhost:5000/build-cart", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: systemPrompt,
-          messages: conversationHistory,
-        }),
+          prompt: userText
+        })
       });
 
-      const data = await response.json();
-      const fullText = data.content
-        .filter((b) => b.type === "text")
-        .map((b) => b.text)
-        .join("\n");
+      const data = await res.json();
 
-      const bundleMatch = fullText.match(/<bundle>([\s\S]*?)<\/bundle>/);
-      let parsedBundle = null;
-      let displayText = fullText;
-
-      if (bundleMatch) {
-        try {
-          parsedBundle = JSON.parse(bundleMatch[1].trim());
-          displayText = fullText.replace(/<bundle>[\s\S]*?<\/bundle>/, "").trim();
-          setBundle(parsedBundle);
-        } catch (_) {}
+      // update bundle panel
+      if (data.cart) {
+        setBundle({
+          bundle: data.cart,
+          total: data.total,
+          status: data.status,
+          reason: data.ai_explanation
+        });
       }
 
-      setMessages((prev) => [...prev, { role: "agent", text: displayText }]);
-    } catch (err) {
+      // show AI message in chat
       setMessages((prev) => [
         ...prev,
-        { role: "agent", text: "⚠️ Connection error. Please try again." },
+        {
+          role: "agent",
+          text: data.ai_explanation || "No response from AI"
+        }
+      ]);
+
+    } catch (err) {
+      console.error(err);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "agent",
+          text: "⚠️ Connection error. Please check backend."
+        }
       ]);
     } finally {
       setIsThinking(false);
@@ -96,11 +86,13 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
   const clearSession = () => {
     setMessages([]);
     setBundle(null);
+    setInput("");
     inputRef.current?.focus();
   };
 
   return (
     <div className="app">
+
       {/* HEADER */}
       <header className="header">
         <div className="header-left">
@@ -110,20 +102,23 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
             <span className="title-sub">Orders</span>
           </div>
         </div>
+
         <div className="header-right">
           <div className="status-pill">
             <span className="status-dot"></span>
             AI Online
           </div>
-          <button className="clear-btn" onClick={clearSession} title="Clear session">
+
+          <button className="clear-btn" onClick={clearSession}>
             ↺ Clear
           </button>
         </div>
       </header>
 
-      {/* MAIN LAYOUT */}
+      {/* MAIN */}
       <div className="main">
-        {/* SUMMARY PANEL LEFT */}
+
+        {/* LEFT SUMMARY */}
         <aside className="summary">
           <div className="summary-header">
             <span className="panel-label">QUOTE SUMMARY</span>
@@ -131,11 +126,14 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
 
           {bundle ? (
             <div className="bundle-content">
+
               <div className="items-list">
                 {bundle.bundle.map((item, i) => (
                   <div key={i} className="item-row">
                     <div className="item-name">{item.name}</div>
-                    <div className="item-price">RM {item.price.toLocaleString()}</div>
+                    <div className="item-price">
+                      RM {item.price.toLocaleString()}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -144,7 +142,9 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
 
               <div className="total-row">
                 <span>Total</span>
-                <span className="total-amount">RM {bundle.total.toLocaleString()}</span>
+                <span className="total-amount">
+                  RM {bundle.total.toLocaleString()}
+                </span>
               </div>
 
               <div className="status-badge">
@@ -156,70 +156,49 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
                 <div className="reason-label">AGENT NOTE</div>
                 <p className="reason-text">{bundle.reason}</p>
               </div>
+
             </div>
           ) : (
             <div className="empty-state">
               <div className="empty-icon">📋</div>
-              <p>Describe your setup needs and I'll build you an optimized quote.</p>
-              <div className="prompt-chips">
-                {["Gaming PC build", "Home office setup", "Developer workstation"].map((p) => (
-                  <button
-                    key={p}
-                    className="chip"
-                    onClick={() => setInput(p)}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
+              <p>Describe your setup and I’ll build a bundle.</p>
             </div>
           )}
         </aside>
 
-        {/* CHAT PANEL RIGHT */}
+        {/* CHAT */}
         <section className="chat">
           <div className="chat-box" ref={chatBoxRef}>
+
             {messages.length === 0 && (
               <div className="chat-welcome">
                 <div className="welcome-icon">🤖</div>
                 <h2>SmartFlow AI Agent</h2>
-                <p>Tell me what you need — I'll find the best bundle for your budget.</p>
+                <p>Tell me what you need.</p>
               </div>
             )}
 
             {messages.map((msg, i) => (
               <div key={i} className={`message-wrap ${msg.role}`}>
-                {msg.role === "agent" && (
-                  <div className="avatar agent-avatar">SF</div>
-                )}
                 <div className={`message ${msg.role}`}>
-                  {msg.text.split("\n").map((line, j) => (
-                    <span key={j}>
-                      {line}
-                      {j < msg.text.split("\n").length - 1 && <br />}
-                    </span>
-                  ))}
+                  {msg.text}
                 </div>
-                {msg.role === "user" && (
-                  <div className="avatar user-avatar">You</div>
-                )}
               </div>
             ))}
 
             {isThinking && (
               <div className="message-wrap agent">
-                <div className="avatar agent-avatar">SF</div>
-                <div className="message agent thinking-msg">
-                  <span className="thinking-label">Thinking</span>
-                  <span className="dots"></span>
+                <div className="message agent">
+                  Thinking...
                 </div>
               </div>
             )}
+
           </div>
         </section>
       </div>
 
-      {/* FIXED INPUT BAR */}
+      {/* INPUT */}
       <div className="input-bar">
         <div className="input-wrap">
           <input
@@ -227,19 +206,19 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Describe your setup or requirements…"
+            placeholder="Describe your setup..."
             disabled={isThinking}
           />
+
           <button
             onClick={sendMessage}
-            disabled={isThinking || !input.trim()}
-            className={isThinking ? "sending" : ""}
+            disabled={!input.trim() || isThinking}
           >
-            {isThinking ? "…" : "Send ↑"}
+            Send
           </button>
         </div>
-        <div className="input-hint">Press Enter to send · Shift+Enter for new line</div>
       </div>
+
     </div>
   );
 }
