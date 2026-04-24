@@ -15,11 +15,16 @@ function App() {
     }
   }, [messages, isThinking]);
 
+  const getTimestamp = () => {
+    const now = new Date();
+    return now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isThinking) return;
 
     const userText = input.trim();
-    const userMsg = { role: "user", text: userText };
+    const userMsg = { role: "user", text: userText, time: getTimestamp() };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsThinking(true);
@@ -75,11 +80,14 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
         } catch (_) {}
       }
 
-      setMessages((prev) => [...prev, { role: "agent", text: displayText }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: "agent", text: displayText, time: getTimestamp() },
+      ]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { role: "agent", text: "⚠️ Connection error. Please try again." },
+        { role: "agent", text: "Connection error. Please try again.", time: getTimestamp() },
       ]);
     } finally {
       setIsThinking(false);
@@ -91,6 +99,7 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
       e.preventDefault();
       sendMessage();
     }
+    // Shift+Enter: do nothing — textarea handles it naturally
   };
 
   const clearSession = () => {
@@ -104,17 +113,14 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
       {/* HEADER */}
       <header className="header">
         <div className="header-left">
-          <div className="logo-mark">SF</div>
+          <div className="logo-mark">
+            <img src="logo192.png" alt="SmartFlow Orders" />
+          </div>
           <div className="header-title">
-            <span className="title-main">SmartFlow</span>
-            <span className="title-sub">Orders</span>
+            <span className="title-main">SmartFlow Orders</span>
           </div>
         </div>
         <div className="header-right">
-          <div className="status-pill">
-            <span className="status-dot"></span>
-            AI Online
-          </div>
           <button className="clear-btn" onClick={clearSession} title="Clear session">
             ↺ Clear
           </button>
@@ -159,15 +165,10 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
             </div>
           ) : (
             <div className="empty-state">
-              <div className="empty-icon">📋</div>
               <p>Describe your setup needs and I'll build you an optimized quote.</p>
               <div className="prompt-chips">
                 {["Gaming PC build", "Home office setup", "Developer workstation"].map((p) => (
-                  <button
-                    key={p}
-                    className="chip"
-                    onClick={() => setInput(p)}
-                  >
+                  <button key={p} className="chip" onClick={() => setInput(p)}>
                     {p}
                   </button>
                 ))}
@@ -181,8 +182,10 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
           <div className="chat-box" ref={chatBoxRef}>
             {messages.length === 0 && (
               <div className="chat-welcome">
-                <div className="welcome-icon">🤖</div>
-                <h2>SmartFlow AI Agent</h2>
+                <div className="welcome-mark">
+                  <img src="logo192.png" alt="SmartFlow Orders" />
+                </div>
+                <h2>SmartFlow Orders AI Agent</h2>
                 <p>Tell me what you need — I'll find the best bundle for your budget.</p>
               </div>
             )}
@@ -192,13 +195,16 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
                 {msg.role === "agent" && (
                   <div className="avatar agent-avatar">SF</div>
                 )}
-                <div className={`message ${msg.role}`}>
-                  {msg.text.split("\n").map((line, j) => (
-                    <span key={j}>
-                      {line}
-                      {j < msg.text.split("\n").length - 1 && <br />}
-                    </span>
-                  ))}
+                <div className="message-column">
+                  <div className={`message ${msg.role}`}>
+                    {msg.text.split("\n").map((line, j) => (
+                      <span key={j}>
+                        {line}
+                        {j < msg.text.split("\n").length - 1 && <br />}
+                      </span>
+                    ))}
+                  </div>
+                  <div className={`timestamp ${msg.role}`}>{msg.time}</div>
                 </div>
                 {msg.role === "user" && (
                   <div className="avatar user-avatar">You</div>
@@ -222,13 +228,14 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
       {/* FIXED INPUT BAR */}
       <div className="input-bar">
         <div className="input-wrap">
-          <input
+          <textarea
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Describe your setup or requirements…"
             disabled={isThinking}
+            rows={1}
           />
           <button
             onClick={sendMessage}
@@ -238,7 +245,7 @@ Always use Malaysian Ringgit (RM) prices. Be concise and helpful. Show thinking 
             {isThinking ? "…" : "Send ↑"}
           </button>
         </div>
-        <div className="input-hint">Press Enter to send · Shift+Enter for new line</div>
+        <div className="input-hint">Enter to send · Shift+Enter for new line</div>
       </div>
     </div>
   );
