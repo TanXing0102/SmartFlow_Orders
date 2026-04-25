@@ -51,4 +51,4 @@ Backend runs on: http://localhost:5000
     npm install
     npm start
 
-Frontend runs on:vhttp://localhost:3000
+Frontend runs on: http://localhost:3000
