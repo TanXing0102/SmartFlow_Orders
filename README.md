@@ -34,6 +34,19 @@ https://teamsyntaxerrorumh.atlassian.net/jira/dashboards /10000
 
 ---
 
+## 🔑 API Key Setup
+
+This project requires an API key to run the AI agent.
+
+⚠️ For security reasons, API keys are not included in this repository.
+
+Please create your own Z AI API key and configure it as an environment variable in .env file.
+
+.env file format:
+ZAI_API_KEY="your_api_key_here"
+
+---
+
 ## ⚙️ Installation & Setup
 1. Clone the Repository: git clone https://github.com/TanXing0102/SmartFlow_Orders
 
