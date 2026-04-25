@@ -5,7 +5,7 @@
     "category": "camera",
     "price": 300,
     "stock": true,
-    "specs": {"resolution": "1080p"}
+    "specs": { "resolution": "1080p" }
   },
   {
     "id": "cam_002",
@@ -13,27 +13,587 @@
     "category": "camera",
     "price": 600,
     "stock": true,
-    "specs": {"resolution": "4k"}
+    "specs": { "resolution": "4K" }
+  },
+  {
+    "id": "cam_003",
+    "name": "Action Camera",
+    "category": "camera",
+    "price": 450,
+    "stock": true,
+    "specs": { "resolution": "4K", "waterproof": true }
   },
   {
     "id": "mic_001",
     "name": "Basic Microphone",
     "category": "mic",
     "price": 100,
-    "stock": true
+    "stock": true,
+    "specs": { "type": "condenser" }
+  },
+  {
+    "id": "mic_002",
+    "name": "USB Podcast Microphone",
+    "category": "mic",
+    "price": 220,
+    "stock": true,
+    "specs": { "type": "condenser", "connection": "USB" }
+  },
+  {
+    "id": "mic_003",
+    "name": "Wireless Lapel Microphone",
+    "category": "mic",
+    "price": 380,
+    "stock": true,
+    "specs": { "type": "lavalier", "connection": "wireless" }
   },
   {
     "id": "tripod_001",
     "name": "Standard Tripod",
     "category": "tripod",
     "price": 80,
-    "stock": true
+    "stock": true,
+    "specs": { "maxHeight": "150cm" }
   },
   {
     "id": "tripod_002",
     "name": "Premium Tripod",
     "category": "tripod",
     "price": 200,
-    "stock": true
+    "stock": true,
+    "specs": { "maxHeight": "180cm", "carbonFiber": true }
+  },
+
+  {
+    "id": "gpu_001",
+    "name": "Mid-Range GPU (RTX 4060)",
+    "category": "gpu",
+    "price": 1600,
+    "stock": true,
+    "specs": { "vram": "8GB", "tier": "mid" }
+  },
+  {
+    "id": "gpu_002",
+    "name": "High-End GPU (RTX 4080)",
+    "category": "gpu",
+    "price": 4200,
+    "stock": true,
+    "specs": { "vram": "16GB", "tier": "high" }
+  },
+  {
+    "id": "gpu_003",
+    "name": "Entry GPU (RX 6600)",
+    "category": "gpu",
+    "price": 900,
+    "stock": true,
+    "specs": { "vram": "8GB", "tier": "entry" }
+  },
+
+  {
+    "id": "cpu_001",
+    "name": "Intel Core i5-13600K",
+    "category": "cpu",
+    "price": 1100,
+    "stock": true,
+    "specs": { "cores": 14, "socket": "LGA1700", "tier": "mid" }
+  },
+  {
+    "id": "cpu_002",
+    "name": "Intel Core i9-13900K",
+    "category": "cpu",
+    "price": 2300,
+    "stock": true,
+    "specs": { "cores": 24, "socket": "LGA1700", "tier": "high" }
+  },
+  {
+    "id": "cpu_003",
+    "name": "AMD Ryzen 5 7600X",
+    "category": "cpu",
+    "price": 1050,
+    "stock": true,
+    "specs": { "cores": 6, "socket": "AM5", "tier": "mid" }
+  },
+  {
+    "id": "cpu_004",
+    "name": "AMD Ryzen 9 7900X",
+    "category": "cpu",
+    "price": 2100,
+    "stock": true,
+    "specs": { "cores": 12, "socket": "AM5", "tier": "high" }
+  },
+
+  {
+    "id": "ram_001",
+    "name": "16GB DDR5 RAM",
+    "category": "ram",
+    "price": 280,
+    "stock": true,
+    "specs": { "capacity": "16GB", "type": "DDR5", "speed": "5600MHz" }
+  },
+  {
+    "id": "ram_002",
+    "name": "32GB DDR5 RAM",
+    "category": "ram",
+    "price": 520,
+    "stock": true,
+    "specs": { "capacity": "32GB", "type": "DDR5", "speed": "5600MHz" }
+  },
+  {
+    "id": "ram_003",
+    "name": "64GB DDR5 RAM",
+    "category": "ram",
+    "price": 980,
+    "stock": true,
+    "specs": { "capacity": "64GB", "type": "DDR5", "speed": "5200MHz" }
+  },
+
+  {
+    "id": "storage_001",
+    "name": "500GB NVMe SSD",
+    "category": "storage",
+    "price": 160,
+    "stock": true,
+    "specs": { "capacity": "500GB", "type": "NVMe", "readSpeed": "3500MB/s" }
+  },
+  {
+    "id": "storage_002",
+    "name": "1TB NVMe SSD",
+    "category": "storage",
+    "price": 280,
+    "stock": true,
+    "specs": { "capacity": "1TB", "type": "NVMe", "readSpeed": "7000MB/s" }
+  },
+  {
+    "id": "storage_003",
+    "name": "2TB NVMe SSD",
+    "category": "storage",
+    "price": 520,
+    "stock": true,
+    "specs": { "capacity": "2TB", "type": "NVMe", "readSpeed": "7000MB/s" }
+  },
+  {
+    "id": "storage_004",
+    "name": "4TB HDD",
+    "category": "storage",
+    "price": 280,
+    "stock": true,
+    "specs": { "capacity": "4TB", "type": "HDD", "rpm": "7200" }
+  },
+
+  {
+    "id": "mobo_001",
+    "name": "ATX Motherboard (B760)",
+    "category": "motherboard",
+    "price": 520,
+    "stock": true,
+    "specs": { "socket": "LGA1700", "formFactor": "ATX" }
+  },
+  {
+    "id": "mobo_002",
+    "name": "ATX Motherboard (X670E)",
+    "category": "motherboard",
+    "price": 980,
+    "stock": true,
+    "specs": { "socket": "AM5", "formFactor": "ATX" }
+  },
+
+  {
+    "id": "psu_001",
+    "name": "650W Power Supply (80+ Gold)",
+    "category": "psu",
+    "price": 320,
+    "stock": true,
+    "specs": { "wattage": "650W", "rating": "80+ Gold" }
+  },
+  {
+    "id": "psu_002",
+    "name": "850W Power Supply (80+ Gold)",
+    "category": "psu",
+    "price": 480,
+    "stock": true,
+    "specs": { "wattage": "850W", "rating": "80+ Gold" }
+  },
+  {
+    "id": "psu_003",
+    "name": "1000W Power Supply (80+ Platinum)",
+    "category": "psu",
+    "price": 720,
+    "stock": true,
+    "specs": { "wattage": "1000W", "rating": "80+ Platinum" }
+  },
+
+  {
+    "id": "case_001",
+    "name": "Mid-Tower ATX Case",
+    "category": "case",
+    "price": 280,
+    "stock": true,
+    "specs": { "formFactor": "Mid-Tower", "rgb": false }
+  },
+  {
+    "id": "case_002",
+    "name": "Mid-Tower RGB Gaming Case",
+    "category": "case",
+    "price": 420,
+    "stock": true,
+    "specs": { "formFactor": "Mid-Tower", "rgb": true }
+  },
+
+  {
+    "id": "cool_001",
+    "name": "Air CPU Cooler",
+    "category": "cooling",
+    "price": 180,
+    "stock": true,
+    "specs": { "type": "air", "tdp": "250W" }
+  },
+  {
+    "id": "cool_002",
+    "name": "240mm AIO Liquid Cooler",
+    "category": "cooling",
+    "price": 380,
+    "stock": true,
+    "specs": { "type": "AIO", "radiator": "240mm" }
+  },
+  {
+    "id": "cool_003",
+    "name": "360mm AIO Liquid Cooler",
+    "category": "cooling",
+    "price": 580,
+    "stock": true,
+    "specs": { "type": "AIO", "radiator": "360mm" }
+  },
+
+  {
+    "id": "mon_001",
+    "name": "24\" FHD 144Hz Monitor",
+    "category": "monitor",
+    "price": 580,
+    "stock": true,
+    "specs": { "size": "24 inch", "resolution": "1080p", "refreshRate": "144Hz" }
+  },
+  {
+    "id": "mon_002",
+    "name": "27\" QHD 165Hz Monitor",
+    "category": "monitor",
+    "price": 980,
+    "stock": true,
+    "specs": { "size": "27 inch", "resolution": "1440p", "refreshRate": "165Hz" }
+  },
+  {
+    "id": "mon_003",
+    "name": "32\" 4K 60Hz Monitor",
+    "category": "monitor",
+    "price": 1400,
+    "stock": true,
+    "specs": { "size": "32 inch", "resolution": "4K", "refreshRate": "60Hz" }
+  },
+  {
+    "id": "mon_004",
+    "name": "27\" 4K USB-C Monitor",
+    "category": "monitor",
+    "price": 1800,
+    "stock": true,
+    "specs": { "size": "27 inch", "resolution": "4K", "usbC": true }
+  },
+
+  {
+    "id": "kb_001",
+    "name": "Membrane Keyboard",
+    "category": "keyboard",
+    "price": 80,
+    "stock": true,
+    "specs": { "type": "membrane", "wireless": false }
+  },
+  {
+    "id": "kb_002",
+    "name": "Mechanical Gaming Keyboard",
+    "category": "keyboard",
+    "price": 280,
+    "stock": true,
+    "specs": { "type": "mechanical", "switch": "Red", "rgb": true }
+  },
+  {
+    "id": "kb_003",
+    "name": "Wireless Mechanical Keyboard",
+    "category": "keyboard",
+    "price": 420,
+    "stock": true,
+    "specs": { "type": "mechanical", "wireless": true, "rgb": true }
+  },
+  {
+    "id": "kb_004",
+    "name": "Compact 75% Keyboard",
+    "category": "keyboard",
+    "price": 360,
+    "stock": true,
+    "specs": { "type": "mechanical", "layout": "75%", "wireless": true }
+  },
+
+  {
+    "id": "mouse_001",
+    "name": "Basic Optical Mouse",
+    "category": "mouse",
+    "price": 50,
+    "stock": true,
+    "specs": { "dpi": "1600", "wireless": false }
+  },
+  {
+    "id": "mouse_002",
+    "name": "Gaming Mouse",
+    "category": "mouse",
+    "price": 180,
+    "stock": true,
+    "specs": { "dpi": "25600", "wireless": false, "rgb": true }
+  },
+  {
+    "id": "mouse_003",
+    "name": "Wireless Ergonomic Mouse",
+    "category": "mouse",
+    "price": 260,
+    "stock": true,
+    "specs": { "dpi": "4000", "wireless": true, "ergonomic": true }
+  },
+
+  {
+    "id": "headset_001",
+    "name": "Gaming Headset (Wired)",
+    "category": "headset",
+    "price": 180,
+    "stock": true,
+    "specs": { "surround": "7.1", "wireless": false }
+  },
+  {
+    "id": "headset_002",
+    "name": "Wireless Gaming Headset",
+    "category": "headset",
+    "price": 420,
+    "stock": true,
+    "specs": { "surround": "7.1", "wireless": true, "batteryLife": "30hr" }
+  },
+  {
+    "id": "headset_003",
+    "name": "Studio Monitor Headphones",
+    "category": "headset",
+    "price": 380,
+    "stock": true,
+    "specs": { "type": "studio", "impedance": "80 ohm" }
+  },
+
+  {
+    "id": "desk_001",
+    "name": "Standard Office Desk",
+    "category": "desk",
+    "price": 480,
+    "stock": true,
+    "specs": { "width": "120cm", "adjustable": false }
+  },
+  {
+    "id": "desk_002",
+    "name": "Electric Standing Desk",
+    "category": "desk",
+    "price": 1200,
+    "stock": true,
+    "specs": { "width": "140cm", "adjustable": true, "motorized": true }
+  },
+
+  {
+    "id": "chair_001",
+    "name": "Ergonomic Office Chair",
+    "category": "chair",
+    "price": 680,
+    "stock": true,
+    "specs": { "lumbarSupport": true, "armrests": "4D" }
+  },
+  {
+    "id": "chair_002",
+    "name": "Gaming Chair",
+    "category": "chair",
+    "price": 580,
+    "stock": true,
+    "specs": { "reclining": true, "footrest": true }
+  },
+  {
+    "id": "chair_003",
+    "name": "Premium Mesh Chair",
+    "category": "chair",
+    "price": 1400,
+    "stock": true,
+    "specs": { "material": "mesh", "lumbarSupport": true, "armrests": "4D" }
+  },
+
+  {
+    "id": "hub_001",
+    "name": "USB-C 7-in-1 Hub",
+    "category": "hub",
+    "price": 120,
+    "stock": true,
+    "specs": { "ports": 7, "hdmi": true, "usbC": true }
+  },
+  {
+    "id": "hub_002",
+    "name": "Thunderbolt 4 Dock",
+    "category": "hub",
+    "price": 680,
+    "stock": true,
+    "specs": { "ports": 11, "thunderbolt": 4, "powerDelivery": "96W" }
+  },
+
+  {
+    "id": "net_001",
+    "name": "WiFi 6 USB Adapter",
+    "category": "networking",
+    "price": 120,
+    "stock": true,
+    "specs": { "standard": "WiFi 6", "type": "USB" }
+  },
+  {
+    "id": "net_002",
+    "name": "Gigabit Ethernet Switch (8-port)",
+    "category": "networking",
+    "price": 160,
+    "stock": true,
+    "specs": { "ports": 8, "speed": "1Gbps" }
+  },
+  {
+    "id": "net_003",
+    "name": "WiFi 6 Router",
+    "category": "networking",
+    "price": 480,
+    "stock": true,
+    "specs": { "standard": "WiFi 6", "speed": "AX3000" }
+  },
+
+  {
+    "id": "laptop_001",
+    "name": "Developer Laptop (14\", i7, 16GB, 512GB)",
+    "category": "laptop",
+    "price": 3800,
+    "stock": true,
+    "specs": { "cpu": "Intel i7", "ram": "16GB", "storage": "512GB SSD", "display": "14 inch 2K" }
+  },
+  {
+    "id": "laptop_002",
+    "name": "Gaming Laptop (15.6\", RTX 4070, 32GB)",
+    "category": "laptop",
+    "price": 6200,
+    "stock": true,
+    "specs": { "cpu": "Intel i9", "ram": "32GB", "gpu": "RTX 4070", "display": "15.6 inch 144Hz" }
+  },
+  {
+    "id": "laptop_003",
+    "name": "Ultrabook (13\", M-series, 16GB)",
+    "category": "laptop",
+    "price": 4500,
+    "stock": false,
+    "specs": { "cpu": "ARM M-series", "ram": "16GB", "storage": "512GB SSD", "display": "13 inch Retina" }
+  },
+
+  {
+    "id": "tablet_001",
+    "name": "Drawing Tablet (Medium)",
+    "category": "tablet",
+    "price": 480,
+    "stock": true,
+    "specs": { "size": "medium", "pressure": "8192 levels" }
+  },
+  {
+    "id": "tablet_002",
+    "name": "Pen Display Tablet (15.6\")",
+    "category": "tablet",
+    "price": 1800,
+    "stock": true,
+    "specs": { "size": "15.6 inch", "pressure": "8192 levels", "display": true }
+  },
+
+  {
+    "id": "light_001",
+    "name": "Ring Light (18\")",
+    "category": "lighting",
+    "price": 180,
+    "stock": true,
+    "specs": { "size": "18 inch", "colorTemp": "3000-6000K" }
+  },
+  {
+    "id": "light_002",
+    "name": "Key Light Panel",
+    "category": "lighting",
+    "price": 380,
+    "stock": true,
+    "specs": { "watts": "45W", "colorTemp": "2900-7000K", "appControl": true }
+  },
+
+  {
+    "id": "ups_001",
+    "name": "UPS 650VA",
+    "category": "ups",
+    "price": 280,
+    "stock": true,
+    "specs": { "capacity": "650VA", "outlets": 6 }
+  },
+  {
+    "id": "ups_002",
+    "name": "UPS 1500VA",
+    "category": "ups",
+    "price": 580,
+    "stock": true,
+    "specs": { "capacity": "1500VA", "outlets": 8 }
+  },
+
+  {
+    "id": "pad_001",
+    "name": "Large Desk Mat",
+    "category": "accessories",
+    "price": 60,
+    "stock": true,
+    "specs": { "size": "900x400mm" }
+  },
+  {
+    "id": "pad_002",
+    "name": "Monitor Arm (Single)",
+    "category": "accessories",
+    "price": 180,
+    "stock": true,
+    "specs": { "maxSize": "32 inch", "vesa": "100x100" }
+  },
+  {
+    "id": "pad_003",
+    "name": "Monitor Arm (Dual)",
+    "category": "accessories",
+    "price": 320,
+    "stock": true,
+    "specs": { "maxSize": "27 inch", "vesa": "100x100" }
+  },
+  {
+    "id": "pad_004",
+    "name": "Laptop Stand",
+    "category": "accessories",
+    "price": 95,
+    "stock": true,
+    "specs": { "adjustable": true, "material": "aluminium" }
+  },
+  {
+    "id": "pad_005",
+    "name": "Cable Management Kit",
+    "category": "accessories",
+    "price": 40,
+    "stock": true,
+    "specs": {}
+  },
+  {
+    "id": "pad_006",
+    "name": "Webcam 1080p",
+    "category": "accessories",
+    "price": 180,
+    "stock": true,
+    "specs": { "resolution": "1080p", "fov": "90 degrees" }
+  },
+  {
+    "id": "pad_007",
+    "name": "Webcam 4K",
+    "category": "accessories",
+    "price": 420,
+    "stock": true,
+    "specs": { "resolution": "4K", "fov": "90 degrees", "autofocus": true }
   }
 ]
