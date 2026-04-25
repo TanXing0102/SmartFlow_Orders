@@ -176,7 +176,9 @@ function App() {
             {messages.map((msg, i) => (
               <div key={i} className={`message-wrap ${msg.role}`}>
                 {msg.role === "agent" && (
-                  <div className="avatar agent-avatar">SF</div>
+                  <div className="avatar agent-avatar">
+                    <img src="logo192.png" alt="SmartFlow" className="avatar-logo" />
+                  </div>
                 )}
                 <div className="message-column">
                   <div className={`message ${msg.role}`}>
@@ -197,7 +199,9 @@ function App() {
 
             {isThinking && (
               <div className="message-wrap agent">
-                <div className="avatar agent-avatar">SF</div>
+                <div className="avatar agent-avatar">
+                  <img src="logo192.png" alt="SmartFlow" className="avatar-logo" />
+                </div>
                 <div className="message agent thinking-msg">
                   <span className="thinking-label">Thinking</span>
                   <span className="dots"></span>

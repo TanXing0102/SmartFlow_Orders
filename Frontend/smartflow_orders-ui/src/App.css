@@ -422,6 +422,13 @@ body {
   box-shadow: 0 2px 6px rgba(8,145,178,0.25);
 }
 
+.avatar-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(8,145,178,0.2);
+}
+
 .user-avatar {
   background: var(--surface-3);
   color: var(--text-muted);
