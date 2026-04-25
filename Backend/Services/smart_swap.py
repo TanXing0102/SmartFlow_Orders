@@ -13,11 +13,12 @@ def optimize_cart(cart, budget):
     products = load_products()
 
     for i, item in enumerate(cart):
+        # Fix: stock is boolean true/false in JSON, not a number
         cheaper = [
             p for p in products
             if p["category"] == item["category"]
             and p["price"] < item["price"]
-            and p.get("stock", 0) > 0
+            and p.get("stock") is True
         ]
 
         if cheaper:

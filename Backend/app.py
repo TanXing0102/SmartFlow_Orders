@@ -25,15 +25,19 @@ def build_cart():
 
     user_input = data["prompt"]
 
+    # Accept current cart from frontend for follow-up requests (e.g. "give me cheaper")
+    current_cart = data.get("current_cart", None)
+
     try:
         # -------------------------
         # 1. PLAN
         # -------------------------
-        plan = generate_plan(user_input)
+        plan = generate_plan(user_input, current_cart=current_cart)
         categories = plan.get("categories", [])
-        budget = plan.get("budget", 500)
+        budget = plan.get("budget")
+        preference = plan.get("preference")  # "cheaper", "premium", or None
 
-        # 🚨 CATEGORY NOT SUPPORTED
+        # CATEGORY NOT SUPPORTED
         if not categories:
             return jsonify({
                 "plan": plan,
@@ -46,9 +50,9 @@ def build_cart():
         # -------------------------
         # 2. BUILD CART
         # -------------------------
-        cart = build_bundle(categories)
+        cart = build_bundle(categories, preference=preference)
 
-        # 🚨 EMPTY CART
+        # EMPTY CART
         if not cart:
             return jsonify({
                 "plan": plan,
@@ -59,13 +63,17 @@ def build_cart():
             })
 
         # -------------------------
-        # 3. OPTIMIZE
+        # 3. OPTIMIZE (only if budget given)
         # -------------------------
-        cart, status = optimize_cart(cart, budget)
+        if budget:
+            cart, status = optimize_cart(cart, budget)
+        else:
+            status = "No budget set"
+
         total = calculate_total(cart)
 
         # -------------------------
-        # 4. AI EXPLANATION (STRICT)
+        # 4. AI EXPLANATION
         # -------------------------
         ai_response = call_zai([
             {
@@ -78,7 +86,7 @@ def build_cart():
             },
             {
                 "role": "user",
-                "content": f"Cart: {cart}, Budget: {budget}, Status: {status}"
+                "content": f"Cart: {cart}, Budget: {budget}, Status: {status}, Preference: {preference}"
             }
         ])
 

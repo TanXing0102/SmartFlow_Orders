@@ -2,38 +2,38 @@
 
 /* ─── TOKENS ─────────────────────────────────────────── */
 :root {
-  --bg:          #f0f4f8;
-  --surface:     #ffffff;
-  --surface-2:   #f7fafc;
-  --surface-3:   #eef2f7;
-  --border:      #dde3ec;
-  --border-soft: #e8edf4;
+  --bg:            #f0f4f8;
+  --surface:       #ffffff;
+  --surface-2:     #f7fafc;
+  --surface-3:     #eef2f7;
+  --border:        #dde3ec;
+  --border-soft:   #e8edf4;
 
-  --text:        #0f1923;
-  --text-muted:  #6b7a90;
-  --text-dim:    #3d4f63;
+  --text:          #0f1923;
+  --text-muted:    #6b7a90;
+  --text-dim:      #3d4f63;
 
-  --accent:      #0891b2;
-  --accent-mid:  #06b6d4;
-  --accent-light:#ecfeff;
-  --accent-glow: rgba(8, 145, 178, 0.12);
-  --accent-soft: rgba(8, 145, 178, 0.06);
+  --accent:        #0891b2;
+  --accent-mid:    #06b6d4;
+  --accent-light:  #ecfeff;
+  --accent-glow:   rgba(8, 145, 178, 0.12);
+  --accent-soft:   rgba(8, 145, 178, 0.06);
   --accent-border: rgba(8, 145, 178, 0.2);
 
-  --green:       #059669;
-  --green-bg:    #ecfdf5;
-  --green-border: rgba(5, 150, 105, 0.2);
+  --green:         #059669;
+  --green-bg:      #ecfdf5;
+  --green-border:  rgba(5, 150, 105, 0.2);
 
-  --user-bg:     #e0f2fe;
-  --user-border: rgba(8, 145, 178, 0.18);
-  --agent-bg:    #ffffff;
-  --agent-border:#e8edf4;
+  --user-bg:       #e0f2fe;
+  --user-border:   rgba(8, 145, 178, 0.18);
+  --agent-bg:      #ffffff;
+  --agent-border:  #e8edf4;
 
-  --shadow-sm:   0 1px 3px rgba(15,25,35,0.07), 0 1px 2px rgba(15,25,35,0.04);
+  --shadow-sm: 0 1px 3px rgba(15,25,35,0.07), 0 1px 2px rgba(15,25,35,0.04);
 
-  --radius:      10px;
-  --radius-sm:   7px;
-  --radius-xs:   5px;
+  --radius:    10px;
+  --radius-sm: 7px;
+  --radius-xs: 5px;
 
   --mono: 'DM Mono', monospace;
   --sans: 'DM Sans', sans-serif;
@@ -80,17 +80,17 @@ body {
 .logo-mark {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-mid) 100%);
-  color: white;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  font-weight: 500;
   border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.04em;
-  box-shadow: 0 2px 8px rgba(8,145,178,0.3);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(8,145,178,0.25);
+}
+
+.logo-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .title-main {
@@ -125,7 +125,7 @@ body {
   background: var(--accent-soft);
 }
 
-/* ─── MAIN LAYOUT ────────────────────────────────────── */
+/* ─── MAIN ───────────────────────────────────────────── */
 .main {
   display: flex;
   flex: 1;
@@ -190,7 +190,7 @@ body {
 
 @keyframes slideIn {
   from { opacity: 0; transform: translateX(-6px); }
-  to { opacity: 1; transform: translateX(0); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .item-name {
@@ -353,8 +353,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 40px 20px;
+}
+
+.welcome-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(8,145,178,0.2);
 }
 
 .chat-welcome h2 {
@@ -382,13 +389,12 @@ body {
 
 @keyframes msgIn {
   from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.message-wrap.user { align-self: flex-end; flex-direction: row-reverse; }
+.message-wrap.user  { align-self: flex-end;  flex-direction: row-reverse; }
 .message-wrap.agent { align-self: flex-start; }
 
-/* column: bubble + timestamp stacked */
 .message-column {
   display: flex;
   flex-direction: column;
@@ -397,8 +403,8 @@ body {
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-xs);
   display: flex;
   align-items: center;
@@ -454,7 +460,7 @@ body {
   letter-spacing: 0.03em;
 }
 
-.timestamp.user { text-align: right; }
+.timestamp.user  { text-align: right; }
 .timestamp.agent { text-align: left; }
 
 /* ─── THINKING ───────────────────────────────────────── */
@@ -504,7 +510,6 @@ body {
   align-items: flex-end;
 }
 
-/* textarea replaces input */
 .input-bar textarea {
   flex: 1;
   padding: 10px 14px;
@@ -582,14 +587,6 @@ body {
   letter-spacing: 0.04em;
   padding-left: 2px;
 }
-
-.logo-mark img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-}
-
 
 /* ─── SCROLLBARS ─────────────────────────────────────── */
 .summary::-webkit-scrollbar { width: 3px; }
